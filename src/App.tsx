@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import "./assets/styles/Theme.css";
+import { quotes } from "./data/Quotes";
+import { FaTwitter, FaLinkedin } from "react-icons/fa";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [quote, setQuote] = useState(quotes[0]);
+
+  const getRandomQuote = () => {
+    const random = quotes[Math.floor(Math.random() * quotes.length)];
+    setQuote(random);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div id="quote-box">
+        <p id="text">"{quote.text}"</p>
+        <p id="author">- {quote.author}</p>
+        <div className="d-flex align-items-center justify-content-between">
+          <div>
+            <a
+              id="tweet-quote"
+              href={`https://twitter.com/intent/tweet?text="${quote.text}" - ${quote.author}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginRight: "10px" }}
+            >
+              <FaTwitter className="social-icon" />
+            </a>
+            <a
+              href="https://www.linkedin.com/sharing/share-offsite/?url=https://exampleUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedin className="social-icon" />
+            </a>
+          </div>
+          <button id="new-quote" onClick={getRandomQuote}>
+            New Quote
+          </button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <a className="by" target="_blank" href="https://mohammadakhlaghi.ir">
+        by Mohammad Akhlaghi
+      </a>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
